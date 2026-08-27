@@ -40,7 +40,7 @@
           <div class="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden shrink-0">
             <img 
               v-if="brand.logo" 
-              :src="`${import.meta.env.VITE_API_URL}` + brand.logo" 
+              :src="getLogoUrl(brand.logo)" 
               :alt="brand.name" 
               class="w-full h-full object-contain p-1"
             />
@@ -228,6 +228,10 @@ const deleteBrand = async (id) => {
     alert.type = 'error';
     alert.message = 'Error al eliminar la marca.';
   }
+};
+
+const getLogoUrl = (logoPath) => {
+    return `${import.meta.env.VITE_API_URL}/${logoPath}`; // O ajusta las plecas si ya las incluye
 };
 
 onMounted(fetchBrands);
