@@ -190,7 +190,7 @@ const availableParents = computed(() => {
 const fetchCategories = async () => {
   loading.value = true;
   try {
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/categories`);
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/categories`);
     categories.value = res.data;
   } catch (error) {
     console.error('Error al cargar categorías:', error);
@@ -223,10 +223,10 @@ const saveCategory = async () => {
 
   try {
     if (isEditing.value) {
-      await axios.put(`${import.meta.env.VITE_API_URL}/categories/${editingId.value}`, form, { headers });
+      await axios.put(`${import.meta.env.VITE_API_URL}/api/categories/${editingId.value}`, form, { headers });
       alert.message = 'Categoría actualizada con éxito.';
     } else {
-      await axios.post(`${import.meta.env.VITE_API_URL}/categories`, form, { headers });
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/categories`, form, { headers });
       alert.message = 'Categoría creada con éxito.';
     }
     alert.type = 'success';
@@ -245,7 +245,7 @@ const deleteCategory = async (id) => {
 
   const token = localStorage.getItem('auth_token');
   try {
-    await axios.delete(`${import.meta.env.VITE_API_URL}/categories/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/categories/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert.type = 'success';
