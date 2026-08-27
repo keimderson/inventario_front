@@ -123,7 +123,7 @@
       <div class="w-40 h-40 border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
         <img 
           v-if="qrPreviewUrl || form.pago_movil_qr_url" 
-          :src="qrPreviewUrl || (`${import.meta.env.VITE_API_URL}` + form.pago_movil_qr_url)" 
+          :src="qrPreviewUrl || (apiUrl + form.pago_movil_qr_url)"
           alt="QR Pago Móvil" 
           class="w-full h-full object-contain p-2"
         />
@@ -150,6 +150,7 @@
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
 const activeTab = ref('general');
 const tabs = [
   { id: 'general', name: 'General' },
