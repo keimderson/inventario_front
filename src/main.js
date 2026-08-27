@@ -5,7 +5,7 @@ import router from './router';
 import axios from 'axios';
 
 
-axios.defaults.baseURL = 'http://localhost:8000/api';
+axios.defaults.baseURL = `${import.meta.env.VITE_API_URL}`;
 
 // Este interceptor añade el token a CADA petición automáticamente
 axios.interceptors.request.use(config => {

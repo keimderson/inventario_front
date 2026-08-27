@@ -50,7 +50,7 @@ onMounted(() => {
 // Función para traer la configuración
 const fetchSettings = async () => {
   try {
-    const response = await axios.get('http://localhost:8000/api/settings');
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/settings`);
     settings.value = response.data;
   } catch (error) {
     console.error("Error cargando configuración:", error);
@@ -62,7 +62,7 @@ const handleLogin = async () => {
   loading.value = true;
   try {
     // REVISA: El puerto 8000 debe ser el de tu php artisan serve
-    const response = await axios.post('http://localhost:8000/api/login', form);
+    const response = await axios.post(`${import.meta.env.VITE_API_URL}/login`, form);
 
     localStorage.setItem('auth_token', response.data.access_token);
     //alert('¡Login exitoso!');

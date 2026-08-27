@@ -40,7 +40,7 @@
           <div class="w-12 h-12 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center overflow-hidden shrink-0">
             <img 
               v-if="brand.logo" 
-              :src="'http://localhost:8000' + brand.logo" 
+              :src="`${import.meta.env.VITE_API_URL}` + brand.logo" 
               :alt="brand.name" 
               class="w-full h-full object-contain p-1"
             />
@@ -153,7 +153,7 @@ const handleImageChange = (e) => {
 const fetchBrands = async () => {
   loading.value = true;
   try {
-    const res = await axios.get('http://localhost:8000/api/brands');
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/brands`);
     brands.value = res.data;
   } catch (error) {
     console.error('Error al cargar marcas:', error);
@@ -191,8 +191,8 @@ const saveBrand = async () => {
 
   try {
     const url = isEditing.value 
-      ? `http://localhost:8000/api/brands/${editingId.value}` 
-      : 'http://localhost:8000/api/brands';
+      ? `${import.meta.env.VITE_API_URL}/api/brands/${editingId.value}` 
+      : `${import.meta.env.VITE_API_URL}/api/brands`;
 
     await axios.post(url, formData, {
       headers: {
@@ -218,7 +218,7 @@ const deleteBrand = async (id) => {
 
   const token = localStorage.getItem('auth_token');
   try {
-    await axios.delete(`http://localhost:8000/api/brands/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/brands/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     alert.type = 'success';

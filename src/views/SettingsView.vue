@@ -123,7 +123,7 @@
       <div class="w-40 h-40 border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center bg-gray-50 overflow-hidden relative">
         <img 
           v-if="qrPreviewUrl || form.pago_movil_qr_url" 
-          :src="qrPreviewUrl || ('http://localhost:8000' + form.pago_movil_qr_url)" 
+          :src="qrPreviewUrl || (`${import.meta.env.VITE_API_URL}` + form.pago_movil_qr_url)" 
           alt="QR Pago Móvil" 
           class="w-full h-full object-contain p-2"
         />
@@ -186,7 +186,7 @@ const handleQrUpload = (event) => {
 
 const fetchSettings = async () => {
   try {
-    const res = await axios.get('http://localhost:8000/api/settings');
+    const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/settings`);
     if (res.data) {
       Object.assign(form, res.data);
     }
@@ -213,7 +213,7 @@ const saveSettings = async () => {
       formData.append('pago_movil_qr', qrFile.value);
     }
 
-    const res = await axios.post('http://localhost:8000/api/settings', formData, {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/settings`, formData, {
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data'
@@ -239,7 +239,7 @@ const syncRatesNow = async () => {
   feedback.message = '';
   try {
     const token = localStorage.getItem('auth_token');
-    const res = await axios.post('http://localhost:8000/api/settings/sync-rates', {}, {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/api/settings/sync-rates`, {}, {
       headers: { Authorization: `Bearer ${token}` }
     });
     

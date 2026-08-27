@@ -223,7 +223,7 @@
               <!-- Galería de fotos actuales -->
               <div v-if="existingImages.length > 0" class="flex gap-3 overflow-x-auto p-3 bg-gray-50 rounded-xl border border-gray-100">
                 <div v-for="img in existingImages" :key="img.id" class="shrink-0 relative">
-                  <img :src="'http://localhost:8000' + img.url" class="w-16 h-16 rounded-lg object-cover border border-gray-200 shadow-sm bg-white" />
+                  <img :src="'`${import.meta.env.VITE_API_URL}' + img.url" class="w-16 h-16 rounded-lg object-cover border border-gray-200 shadow-sm bg-white" />
                 </div>
               </div>
               <div v-else-if="isViewing" class="p-4 bg-gray-50 rounded-xl border border-gray-100 text-center">
@@ -358,7 +358,7 @@ const deleteProduct = async (id) => {
   
   try {
     const token = localStorage.getItem('auth_token');
-    await axios.delete(`http://localhost:8000/api/products/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     await fetchData(); // Recargar la tabla
@@ -523,10 +523,10 @@ const fetchData = async () => {
     
     // Ejecutar todas las peticiones al mismo tiempo para mayor rapidez
     const [prodRes, catRes, setRes, brandRes] = await Promise.all([
-      axios.get('http://localhost:8000/api/products', { headers }),
-      axios.get('http://localhost:8000/api/categories', { headers }),
-      axios.get('http://localhost:8000/api/settings'),
-      axios.get('http://localhost:8000/api/brands', { headers }) // <-- Llamada a marcas
+      axios.get(`${import.meta.env.VITE_API_URL}/api/products`, { headers }),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/categories`, { headers }),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/settings`),
+      axios.get(`${import.meta.env.VITE_API_URL}/api/brands`, { headers }) // <-- Llamada a marcas
     ]);
     
     products.value = prodRes.data;
@@ -581,11 +581,11 @@ const saveProduct = async () => {
 
 if (isEditing.value) {
       formData.append('_method', 'PUT');
-      await axios.post(`http://localhost:8000/api/products/${editingId.value}`, formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/products/${editingId.value}`, formData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
     } else {
-      await axios.post('http://localhost:8000/api/products', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, formData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
     }
